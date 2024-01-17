@@ -1,0 +1,87 @@
+Metadata-Version: 2.1
+Name: pytorch-nn-tools
+Version: 0.3.7
+Summary: Tools for NN creation with Pytorch
+Home-page: https://github.com/serge-m/pytorch_nn_tools
+Author: SergeM
+Author-email: serge-m@users.noreply.github.com
+License: MIT license
+Keywords: pytorch_nn_tools
+Platform: UNKNOWN
+Classifier: Development Status :: 2 - Pre-Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Requires-Python: >=3.6
+Description-Content-Type: text/x-rst
+Requires-Dist: Click (>=7.0)
+Requires-Dist: torch (>=1.0)
+Requires-Dist: torchvision
+Requires-Dist: pillow
+Requires-Dist: tensorboard
+Requires-Dist: dataclasses ; python_version < "3.7"
+
+================
+pytorch-nn-tools
+================
+
+
+.. image:: https://img.shields.io/pypi/v/pytorch-nn-tools.svg
+        :target: https://pypi.python.org/pypi/pytorch-nn-tools
+
+.. image:: https://travis-ci.com/serge-m/pytorch-nn-tools.svg?branch=master
+        :target: https://travis-ci.com/github/serge-m/pytorch-nn-tools/
+
+.. image:: https://readthedocs.org/projects/pytorch-nn-tools/badge/?version=latest
+        :target: https://pytorch-nn-tools.readthedocs.io/en/latest/?badge=latest
+        :alt: Documentation Status
+
+
+
+
+Tools for NN creation with Pytorch. The project is greatly inspired by fast.ai library.
+The project brings the convenience functions from fast.ai to a usual pytorch user.
+
+
+Usage examples
+=============================================================
+
+CheckpointSaver
+-----------------------------------
+
+.. code-block:: python
+
+    from pytorch_nn_tools.devices import to_device
+    from pytorch_nn_tools.train.checkpoint import CheckpointSaver
+
+    checkpoint_saver = CheckpointSaver(path_checkpoints, logger=DummyLogger())
+
+    # create your model, optimizer, scheduler
+    # train for several epochs
+    for epoch in range(100):
+        .....
+        # at the end of each epoch we save the results
+        checkpoint_saver.save(model, optimizer, scheduler, epoch)
+
+
+
+    # later you can load the latest checkpoint and continue training
+    last = checkpoint_saver.find_last(start_epoch, end_epoch)
+    if last is not None:
+        print(f"found pretrained results for epoch {last}. Loading...")
+        self.checkpoint_saver.load(model, optimizer, scheduler, last)
+    else:
+        print(f"pretrained weights are not found")
+
+
+Misc
+=============================================================
+* Free software: MIT license
+* Documentation: https://pytorch-nn-tools.readthedocs.io.
+
+
+
